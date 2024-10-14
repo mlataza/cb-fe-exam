@@ -58,9 +58,6 @@ namespace FrontEndWebApp
 
         protected void UsersGridView_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            DisableInsertValidators();
-
-
             var dt = UsersTable;
 
             GridViewRow row = UsersGridView.Rows[e.RowIndex];
@@ -141,14 +138,6 @@ namespace FrontEndWebApp
                 args.IsValid = true;
                 input.CssClass = input.CssClass.Replace("is-invalid", "");
             }
-        }
-
-        protected void DisableInsertValidators()
-        {
-            ((WebControl)UsersGridView.FooterRow.FindControl("InsertFirstNameTextBox_CustomValidator")).Enabled = false;
-            ((WebControl)UsersGridView.FooterRow.FindControl("InsertLastNameTextBox_CustomValidator")).Enabled = false;
-            ((WebControl)UsersGridView.FooterRow.FindControl("InsertIdentityTextBox_CustomValidator")).Enabled = false;
-            ((WebControl)UsersGridView.FooterRow.FindControl("InsertGenderDropDownList_CustomValidator")).Enabled = false;
         }
     }
 }
