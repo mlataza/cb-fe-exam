@@ -27,7 +27,6 @@
                         OnRowUpdating="UsersGridView_RowUpdating"
                         OnRowCancelingEdit="UsersGridView_RowCancelingEdit"
                         OnRowDeleting="UsersGridView_RowDeleting"
-                        OnRowCreated="UsersGridView_RowCreated"
                         OnRowCommand="UsersGridView_RowCommand">
 
                         <Columns>

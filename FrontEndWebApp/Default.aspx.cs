@@ -11,43 +11,56 @@ namespace FrontEndWebApp
 {
     public partial class _Default : Page
     {
+        protected void InitUsersTable() 
+        {
+            var dt = new UsersDataTable();
+            UsersTable = dt;
+        }
+
+        protected void InitEmptyUsersTable()
+        {
+            // This is a dummy data table to show the footer of the gridview
+            var dt = new UsersDataTable();
+            dt.Rows.Add(dt.NewRow());
+            EmptyUsersTable = dt;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                DataTable dt = new DataTable();
-                
-                // Create 
-                dt.Columns.Add("FirstName", typeof(string));
-                dt.Columns.Add("LastName", typeof(string));
-                dt.Columns.Add("Identity", typeof(string));
-                dt.Columns.Add("Gender", typeof(string));
-
-                // Add dummy row to show the footer when the table is empty
-                dt.Rows.Add(dt.NewRow());
-
-                UsersTable = dt;
+                InitEmptyUsersTable();
+                InitUsersTable();
 
                 BindGrid();
             }
         }
 
-        public DataTable UsersTable
+        public UsersDataTable UsersTable
         {
-            get { return (DataTable)Session["Users"]; }
+            get { return (UsersDataTable)Session["Users"]; }
             set { Session["Users"] = value; }
+        }
+
+        public UsersDataTable EmptyUsersTable
+        {
+            get { return (UsersDataTable)Session["EmptyUsers"]; }
+            set { Session["EmptyUsers"] = value; }
         }
 
         protected void BindGrid()
         {
-            UsersGridView.DataSource = UsersTable;
-            UsersGridView.DataBind();
-
-            // Hide the dummy row
-            if (UsersGridView.Rows.Count > 0)
+            if (UsersTable.Rows.Count > 0)
             {
-                UsersGridView.Rows[0].Visible = false;
+                UsersGridView.DataSource = UsersTable;
+                UsersGridView.DataBind();
             }
+            else
+            {
+                UsersGridView.DataSource = EmptyUsersTable;
+                UsersGridView.DataBind();
+                UsersGridView.Rows[0].Visible = false;
+            }        
         }
 
         protected void UsersGridView_RowEditing(object sender, GridViewEditEventArgs e)
@@ -85,11 +98,6 @@ namespace FrontEndWebApp
             GridViewRow row = UsersGridView.Rows[e.RowIndex];
             dt.Rows.RemoveAt(row.DataItemIndex);
             BindGrid();
-        }
-
-        protected void UsersGridView_RowCreated(object sender, GridViewRowEventArgs e)
-        {
-            Console.WriteLine(e.Row);
         }
 
         protected void UsersGridView_RowCommand(object sender, GridViewCommandEventArgs e)
