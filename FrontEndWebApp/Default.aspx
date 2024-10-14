@@ -60,6 +60,7 @@
                                         runat="server"
                                         ID="UpdateButton"
                                         CommandName="Update"
+                                        ValidationGroup="Update"
                                         Text="Update"
                                         CssClass="btn btn-primary" />
                                     <asp:LinkButton
@@ -91,6 +92,16 @@
                                                     placeholder="First Name"
                                                     MaxLength="120"
                                                     Text='<%# Bind("FirstName") %>' />
+                                                <div class="invalid-feedback">
+                                                    <asp:CustomValidator
+                                                        runat="server"
+                                                        ID="FirstNameTextBox_CustomValidator"
+                                                        ControlToValidate="FirstNameTextBox"
+                                                        ValidateEmptyText="True"
+                                                        Text="Please provide first name."
+                                                        OnServerValidate="CustomValidator_ServerValidate"
+                                                        ValidationGroup="Update" />
+                                                </div>
                                             </div>
                                             <div class="col">
                                                 <asp:TextBox
@@ -100,6 +111,16 @@
                                                     placeholder="Last Name"
                                                     MaxLength="120"
                                                     Text='<%# Bind("LastName") %>' />
+                                                <div class="invalid-feedback">
+                                                    <asp:CustomValidator
+                                                        runat="server"
+                                                        ID="LastNameTextBox_CustomValidator"
+                                                        ControlToValidate="LastNameTextBox"
+                                                        ValidateEmptyText="True"
+                                                        Text="Please provide last name."
+                                                        OnServerValidate="CustomValidator_ServerValidate"
+                                                        ValidationGroup="Update" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -122,7 +143,7 @@
                                                         ControlToValidate="InsertFirstNameTextBox"
                                                         ValidateEmptyText="True"
                                                         Text="Please provide first name."
-                                                        OnServerValidate="Footer_Required_CustomValidator_ServerValidate" 
+                                                        OnServerValidate="CustomValidator_ServerValidate" 
                                                         ValidationGroup="Insert" />
                                                 </div>
                                             </div>
@@ -140,7 +161,7 @@
                                                         ControlToValidate="InsertLastNameTextBox"
                                                         ValidateEmptyText="True"
                                                         Text="Please provide last name."
-                                                        OnServerValidate="Footer_Required_CustomValidator_ServerValidate"
+                                                        OnServerValidate="CustomValidator_ServerValidate"
                                                         ValidationGroup="Insert" />
                                                 </div>
                                             </div>
@@ -164,6 +185,16 @@
                                         placeholder="Identity Card"
                                         MaxLength="20"
                                         Text='<%# Bind("Identity") %>' />
+                                    <div class="invalid-feedback">
+                                        <asp:CustomValidator
+                                            runat="server"
+                                            ID="IdentityTextBox_CustomValidator"
+                                            ControlToValidate="IdentityTextBox"
+                                            ValidateEmptyText="True"
+                                            Text="Please provide identity card."
+                                            OnServerValidate="CustomValidator_ServerValidate"
+                                            ValidationGroup="Update" />
+                                    </div>
                                 </EditItemTemplate>
                                 <FooterTemplate>
                                     <asp:TextBox
@@ -179,7 +210,7 @@
                                             ControlToValidate="InsertIdentityTextBox"
                                             ValidateEmptyText="True"
                                             Text="Please provide identity card."
-                                            OnServerValidate="Footer_Required_CustomValidator_ServerValidate"
+                                            OnServerValidate="CustomValidator_ServerValidate"
                                             ValidationGroup="Insert" />
                                     </div>
                                 </FooterTemplate>
@@ -201,6 +232,16 @@
                                         <asp:ListItem Value="Male">Male</asp:ListItem>
                                         <asp:ListItem Value="Female">Female</asp:ListItem>
                                     </asp:DropDownList>
+                                    <div class="invalid-feedback">
+                                        <asp:CustomValidator
+                                            runat="server"
+                                            ID="GenderDropDownList_CustomValidator"
+                                            ControlToValidate="GenderDropDownList"
+                                            ValidateEmptyText="True"
+                                            Text="Please provide gender."
+                                            OnServerValidate="CustomValidator_ServerValidate"
+                                            ValidationGroup="Update" />
+                                    </div>
                                 </EditItemTemplate>
                                 <FooterTemplate>
                                     <asp:DropDownList
@@ -219,7 +260,7 @@
                                             ControlToValidate="InsertGenderDropDownList"
                                             ValidateEmptyText="True"
                                             Text="Please provide gender."
-                                            OnServerValidate="Footer_Required_CustomValidator_ServerValidate"
+                                            OnServerValidate="CustomValidator_ServerValidate"
                                             ValidationGroup="Insert" />
                                     </div>
                                 </FooterTemplate>

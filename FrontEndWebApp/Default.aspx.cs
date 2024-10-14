@@ -127,11 +127,12 @@ namespace FrontEndWebApp
 
         public DropDownList InsertGenderDropDownList => (DropDownList)UsersGridView.FooterRow.FindControl("InsertGenderDropDownList");
 
-        protected void Footer_Required_CustomValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        protected void CustomValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
             CustomValidator customValidator = (CustomValidator)source;
-            WebControl input = (WebControl)UsersGridView.FooterRow.FindControl(customValidator.ControlToValidate);
+            WebControl input = (WebControl)customValidator.FindControl(customValidator.ControlToValidate);
 
+            // Check if data is empty
             if (string.IsNullOrEmpty(args.Value))
             {
                 args.IsValid = false;
@@ -140,12 +141,13 @@ namespace FrontEndWebApp
                 {
                     input.CssClass += " is-invalid";
                 }
+
+                return;
             }
-            else
-            {
-                args.IsValid = true;
-                input.CssClass = input.CssClass.Replace("is-invalid", "");
-            }
+            
+            // Input is valid
+            args.IsValid = true;
+            input.CssClass = input.CssClass.Replace("is-invalid", "");
         }
     }
 }
