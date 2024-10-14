@@ -34,12 +34,13 @@
 
                             <asp:TemplateField HeaderText="Options">
                                 <FooterTemplate>
-                                    <asp:LinkButton 
+                                    <asp:LinkButton
                                         runat="server"
                                         ID="InsertButton"
                                         CommandName="Insert"
-                                        Text="Add" 
-                                        CssClass="btn btn-primary"/>
+                                        Text="Add"
+                                        CssClass="btn btn-primary" 
+                                        ValidationGroup="Insert" />
                                 </FooterTemplate>
                                 <ItemTemplate>
                                     <asp:LinkButton
@@ -81,38 +82,72 @@
                                         runat="server" />
                                 </ItemTemplate>
                                 <EditItemTemplate>
-                                    <div class="input-group">
-                                        <asp:TextBox 
-                                            runat="server" 
-                                            ID="FirstNameTextBox" 
-                                            CssClass="form-control eng"
-                                            placeholder="First Name"
-                                            maxlength="120"
-                                            Text='<%# Bind("FirstName") %>' />
-                                        <asp:TextBox 
-                                            runat="server" 
-                                            ID="LastNameTextBox" 
-                                            CssClass="form-control eng"
-                                            placeholder="Last Name"
-                                            maxlength="120"
-                                            Text='<%# Bind("LastName") %>' />
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col">
+                                                <asp:TextBox
+                                                    runat="server"
+                                                    ID="FirstNameTextBox"
+                                                    CssClass="form-control eng"
+                                                    placeholder="First Name"
+                                                    MaxLength="120"
+                                                    Text='<%# Bind("FirstName") %>' />
+                                            </div>
+                                            <div class="col">
+                                                <asp:TextBox
+                                                    runat="server"
+                                                    ID="LastNameTextBox"
+                                                    CssClass="form-control eng"
+                                                    placeholder="Last Name"
+                                                    MaxLength="120"
+                                                    Text='<%# Bind("LastName") %>' />
+                                            </div>
+                                        </div>
                                     </div>
                                 </EditItemTemplate>
                                 <FooterTemplate>
-                                    <div class="input-group">
-                                        <asp:TextBox
-                                            runat="server"
-                                            ID="InsertFirstNameTextBox"
-                                            CssClass="form-control eng"
-                                            maxlength="120"
-                                            placeholder="First Name" />
-                                        <asp:TextBox
-                                            runat="server"
-                                            ID="InsertLastNameTextBox"
-                                            CssClass="form-control eng"
-                                            maxlength="120"
-                                            placeholder="Last Name" />
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col">
+                                                <asp:TextBox
+                                                    runat="server"
+                                                    ID="InsertFirstNameTextBox"
+                                                    CssClass="form-control eng"
+                                                    MaxLength="120"
+                                                    placeholder="First Name" 
+                                                    />
+                                                <div class="invalid-feedback">
+                                                    <asp:CustomValidator
+                                                        runat="server"
+                                                        ID="InsertFirstNameTextBox_CustomValidator"
+                                                        ControlToValidate="InsertFirstNameTextBox"
+                                                        ValidateEmptyText="True"
+                                                        Text="Please provide first name."
+                                                        OnServerValidate="Footer_Required_CustomValidator_ServerValidate" 
+                                                        ValidationGroup="Insert" />
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <asp:TextBox
+                                                    runat="server"
+                                                    ID="InsertLastNameTextBox"
+                                                    CssClass="form-control eng"
+                                                    MaxLength="120"
+                                                    placeholder="Last Name" />
+                                                <div class="invalid-feedback">
+                                                    <asp:CustomValidator
+                                                        runat="server"
+                                                        ID="InsertLastNameTextBox_CustomValidator"
+                                                        ControlToValidate="InsertLastNameTextBox"
+                                                        ValidateEmptyText="True"
+                                                        Text="Please provide last name."
+                                                        OnServerValidate="Footer_Required_CustomValidator_ServerValidate"
+                                                        ValidationGroup="Insert" />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </FooterTemplate>
                             </asp:TemplateField>
 
@@ -123,21 +158,31 @@
                                         runat="server" />
                                 </ItemTemplate>
                                 <EditItemTemplate>
-                                    <asp:TextBox 
-                                        runat="server" 
+                                    <asp:TextBox
+                                        runat="server"
                                         ID="IdentityTextBox"
                                         CssClass="form-control num"
                                         placeholder="Identity Card"
-                                        maxlength="20"
+                                        MaxLength="20"
                                         Text='<%# Bind("Identity") %>' />
                                 </EditItemTemplate>
                                 <FooterTemplate>
-                                    <asp:TextBox 
-                                        runat="server" 
+                                    <asp:TextBox
+                                        runat="server"
                                         ID="InsertIdentityTextBox"
                                         CssClass="form-control num"
                                         placeholder="Identity Card"
-                                        maxlength="20"/>
+                                        MaxLength="20" />
+                                    <div class="invalid-feedback">
+                                        <asp:CustomValidator
+                                            runat="server"
+                                            ID="InsertIdentityTextBox_CustomValidator"
+                                            ControlToValidate="InsertIdentityTextBox"
+                                            ValidateEmptyText="True"
+                                            Text="Please provide identity card."
+                                            OnServerValidate="Footer_Required_CustomValidator_ServerValidate"
+                                            ValidationGroup="Insert" />
+                                    </div>
                                 </FooterTemplate>
                             </asp:TemplateField>
 
@@ -168,6 +213,16 @@
                                         <asp:ListItem Value="Male">Male</asp:ListItem>
                                         <asp:ListItem Value="Female">Female</asp:ListItem>
                                     </asp:DropDownList>
+                                    <div class="invalid-feedback">
+                                        <asp:CustomValidator
+                                            runat="server"
+                                            ID="InsertGenderDropDownList_CustomValidator"
+                                            ControlToValidate="InsertGenderDropDownList"
+                                            ValidateEmptyText="True"
+                                            Text="Please provide gender."
+                                            OnServerValidate="Footer_Required_CustomValidator_ServerValidate"
+                                            ValidationGroup="Insert" />
+                                    </div>
                                 </FooterTemplate>
                             </asp:TemplateField>
 

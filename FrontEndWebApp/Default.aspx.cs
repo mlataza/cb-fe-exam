@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -43,7 +44,10 @@ namespace FrontEndWebApp
             UsersGridView.DataBind();
 
             // Hide the dummy row
-            UsersGridView.Rows[0].Visible = false;
+            if (UsersGridView.Rows.Count > 0)
+            {
+                UsersGridView.Rows[0].Visible = false;
+            }
         }
 
         protected void UsersGridView_RowEditing(object sender, GridViewEditEventArgs e)
@@ -54,6 +58,9 @@ namespace FrontEndWebApp
 
         protected void UsersGridView_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            DisableInsertValidators();
+
+
             var dt = UsersTable;
 
             GridViewRow row = UsersGridView.Rows[e.RowIndex];
@@ -90,6 +97,12 @@ namespace FrontEndWebApp
 
         protected void UsersGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            // Do not execute if page is invalid
+            if (!Page.IsValid)
+            {
+                return;
+            }
+
             if (e.CommandName == "Insert")
             {
                 UsersTable.Rows.Add(
@@ -109,5 +122,33 @@ namespace FrontEndWebApp
 
         public DropDownList InsertGenderDropDownList => (DropDownList)UsersGridView.FooterRow.FindControl("InsertGenderDropDownList");
 
+        protected void Footer_Required_CustomValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            CustomValidator customValidator = (CustomValidator)source;
+            WebControl input = (WebControl)UsersGridView.FooterRow.FindControl(customValidator.ControlToValidate);
+
+            if (string.IsNullOrEmpty(args.Value))
+            {
+                args.IsValid = false;
+
+                if (!input.CssClass.Contains("is-invalid"))
+                {
+                    input.CssClass += " is-invalid";
+                }
+            }
+            else
+            {
+                args.IsValid = true;
+                input.CssClass = input.CssClass.Replace("is-invalid", "");
+            }
+        }
+
+        protected void DisableInsertValidators()
+        {
+            ((WebControl)UsersGridView.FooterRow.FindControl("InsertFirstNameTextBox_CustomValidator")).Enabled = false;
+            ((WebControl)UsersGridView.FooterRow.FindControl("InsertLastNameTextBox_CustomValidator")).Enabled = false;
+            ((WebControl)UsersGridView.FooterRow.FindControl("InsertIdentityTextBox_CustomValidator")).Enabled = false;
+            ((WebControl)UsersGridView.FooterRow.FindControl("InsertGenderDropDownList_CustomValidator")).Enabled = false;
+        }
     }
 }
