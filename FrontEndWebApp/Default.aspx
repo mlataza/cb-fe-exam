@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head runat="server">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Users Gridview</title>
 
     <link href="Content/bootstrap.min.css" rel="Stylesheet" />
@@ -18,16 +20,37 @@
             </div>
             <div class="row">
                 <div class="col">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Page Size</span>
+                        <asp:DropDownList runat="server"
+                            AutoPostBack="true"
+                            CssClass="form-select"
+                            ID="PageSizeDropDown"
+                            aria-label="Select page size"
+                            OnSelectedIndexChanged="PageSizeSelector_SelectedIndexChanged">
+                            <asp:ListItem Value="10">10</asp:ListItem>
+                            <asp:ListItem Value="20">20</asp:ListItem>
+                            <asp:ListItem Value="30">30</asp:ListItem>
+                            <asp:ListItem Value="40">40</asp:ListItem>
+                            <asp:ListItem Value="50">50</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
                     <asp:GridView runat="server"
                         ID="UsersGridView"
                         AutoGenerateColumns="False"
                         ShowFooter="true"
+                        AllowPaging="true"
                         CssClass="table"
                         OnRowEditing="UsersGridView_RowEditing"
                         OnRowUpdating="UsersGridView_RowUpdating"
                         OnRowCancelingEdit="UsersGridView_RowCancelingEdit"
                         OnRowDeleting="UsersGridView_RowDeleting"
-                        OnRowCommand="UsersGridView_RowCommand">
+                        OnRowCommand="UsersGridView_RowCommand"
+                        OnPageIndexChanging="UsersGridView_PageIndexChanging">
 
                         <Columns>
 

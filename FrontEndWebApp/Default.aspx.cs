@@ -1,6 +1,7 @@
 ﻿using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -31,9 +32,79 @@ namespace FrontEndWebApp
             {
                 InitEmptyUsersTable();
                 InitUsersTable();
+                InsertDummyData(); // Only for pagination test
 
                 BindGrid();
             }
+        }
+
+        protected void InsertDummyData()
+        {
+            UsersTable.Rows.Add("Liam", "Johnson", "84723", "Male");
+            UsersTable.Rows.Add("Emma", "Smith", "32904", "Female");
+            UsersTable.Rows.Add("Noah", "Brown", "19576", "Male");
+            UsersTable.Rows.Add("Ava", "Garcia", "48261", "Female");
+            UsersTable.Rows.Add("Oliver", "Martinez", "73418", "Male");
+            UsersTable.Rows.Add("Sophia", "Robinson", "56029", "Female");
+            UsersTable.Rows.Add("Elijah", "Clark", "91847", "Male");
+            UsersTable.Rows.Add("Mia", "Lewis", "20384", "Female");
+            UsersTable.Rows.Add("Lucas", "Walker", "61572", "Male");
+            UsersTable.Rows.Add("Isabella", "Hall", "47950", "Female");
+            UsersTable.Rows.Add("James", "Lee", "18473", "Male");
+            UsersTable.Rows.Add("Amelia", "King", "49268", "Female");
+            UsersTable.Rows.Add("Benjamin", "Wright", "37016", "Male");
+            UsersTable.Rows.Add("Harper", "Scott", "24950", "Female");
+            UsersTable.Rows.Add("Elijah", "Young", "87412", "Male");
+            UsersTable.Rows.Add("Grace", "Hill", "30271", "Female");
+            UsersTable.Rows.Add("Daniel", "Adams", "65038", "Male");
+            UsersTable.Rows.Add("Lily", "Baker", "81594", "Female");
+            UsersTable.Rows.Add("Michael", "Gonzalez", "93604", "Male");
+            UsersTable.Rows.Add("Chloe", "Nelson", "17482", "Female");
+            UsersTable.Rows.Add("Alexander", "Carter", "62573", "Male");
+            UsersTable.Rows.Add("Scarlett", "Mitchell", "48329", "Female");
+            UsersTable.Rows.Add("Matthew", "Perez", "71825", "Male");
+            UsersTable.Rows.Add("Ella", "Roberts", "53062", "Female");
+            UsersTable.Rows.Add("Jacob", "Turner", "34917", "Male");
+            UsersTable.Rows.Add("Victoria", "Phillips", "76150", "Female");
+            UsersTable.Rows.Add("Aiden", "Campbell", "25493", "Male");
+            UsersTable.Rows.Add("Aria", "Parker", "86240", "Female");
+            UsersTable.Rows.Add("Samuel", "Edwards", "19475", "Male");
+            UsersTable.Rows.Add("Zoey", "Collins", "47832", "Female");
+            UsersTable.Rows.Add("Jackson", "Harris", "83729", "Male");
+            UsersTable.Rows.Add("Avery", "Stewart", "56480", "Female");
+            UsersTable.Rows.Add("Sebastian", "Flores", "98123", "Male");
+            UsersTable.Rows.Add("Samantha", "Nguyen", "21874", "Female");
+            UsersTable.Rows.Add("Gabriel", "Hernandez", "73012", "Male");
+            UsersTable.Rows.Add("Nora", "Gonzalez", "59418", "Female");
+            UsersTable.Rows.Add("Carter", "Sanders", "18574", "Male");
+            UsersTable.Rows.Add("Riley", "Price", "74023", "Female");
+            UsersTable.Rows.Add("Isaac", "Bennett", "98240", "Male");
+            UsersTable.Rows.Add("Luna", "Wood", "21586", "Female");
+            UsersTable.Rows.Add("Daniel", "Barnes", "62817", "Male");
+            UsersTable.Rows.Add("Bella", "Ross", "47382", "Female");
+            UsersTable.Rows.Add("Henry", "Hughes", "91658", "Male");
+            UsersTable.Rows.Add("Layla", "Flores", "70429", "Female");
+            UsersTable.Rows.Add("Mason", "Ward", "84750", "Male");
+            UsersTable.Rows.Add("Sofia", "Peterson", "32901", "Female");
+            UsersTable.Rows.Add("Levi", "Gray", "24893", "Male");
+            UsersTable.Rows.Add("Mila", "James", "87014", "Female");
+            UsersTable.Rows.Add("Owen", "Cruz", "56231", "Male");
+            UsersTable.Rows.Add("Arlo", "Simmons", "19764", "Male");
+            UsersTable.Rows.Add("Hazel", "Kelley", "84927", "Female");
+            UsersTable.Rows.Add("Wyatt", "Butler", "46012", "Male");
+            UsersTable.Rows.Add("Charlotte", "Fisher", "21367", "Female");
+            UsersTable.Rows.Add("Eli", "Diaz", "90834", "Male");
+            UsersTable.Rows.Add("Skylar", "Richardson", "37419", "Female");
+            UsersTable.Rows.Add("Asher", "Kim", "62574", "Male");
+            UsersTable.Rows.Add("Emily", "Cox", "21573", "Female");
+            UsersTable.Rows.Add("Cooper", "Howard", "95742", "Male");
+            UsersTable.Rows.Add("Victoria", "Ward", "63480", "Female");
+            UsersTable.Rows.Add("Jackson", "Knight", "38261", "Male");
+            UsersTable.Rows.Add("Lydia", "Scott", "19528", "Female");
+            UsersTable.Rows.Add("Finn", "Long", "76214", "Male");
+            UsersTable.Rows.Add("Sienna", "Henderson", "40819", "Female");
+            UsersTable.Rows.Add("Leo", "Harrison", "32985", "Male");
+            UsersTable.Rows.Add("Zara", "McDonald", "14726", "Female");
         }
 
         public UsersDataTable UsersTable
@@ -102,14 +173,14 @@ namespace FrontEndWebApp
 
         protected void UsersGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            // Do not execute if page is invalid
-            if (!Page.IsValid)
-            {
-                return;
-            }
-
             if (e.CommandName == "Insert")
             {
+                // Do not execute if page is invalid
+                if (!Page.IsValid)
+                {
+                    return;
+                }
+
                 UsersTable.Rows.Add(
                     InsertFirstNameTextBox.Text, 
                     InsertLastNameTextBox.Text,
@@ -148,6 +219,19 @@ namespace FrontEndWebApp
             // Input is valid
             args.IsValid = true;
             input.CssClass = input.CssClass.Replace("is-invalid", "");
+        }
+
+        protected void UsersGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            UsersGridView.EditIndex = -1;
+            UsersGridView.PageIndex = e.NewPageIndex;
+            BindGrid();
+        }
+
+        protected void PageSizeSelector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UsersGridView.PageSize = Int32.Parse(((DropDownList)sender).SelectedValue);
+            BindGrid();
         }
     }
 }
