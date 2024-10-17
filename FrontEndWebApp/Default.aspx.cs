@@ -119,11 +119,37 @@ namespace FrontEndWebApp
             set { Session["EmptyUsers"] = value; }
         }
 
-        protected void BindGrid()
+        protected string BuildSortExpression(string sortExpression, string sortDirection)
+        {
+            var expression = "";
+
+            foreach (var column in sortExpression.Split(','))
+            {
+                expression += ", " + column + " " + sortDirection;
+            }
+
+            return expression.Substring(2);
+        }
+
+        protected void BindGrid(string sortExpression = null)
         {
             if (UsersTable.Rows.Count > 0)
             {
-                UsersGridView.DataSource = UsersTable;
+                if (sortExpression == null)
+                {
+                    UsersGridView.DataSource = UsersTable;
+                }
+                else
+                {
+                    // Flip the sort direction
+                    SortDirection = SortDirection == "ASC" ? "DESC" : "ASC";
+
+                    // Use a DataView to sort the data
+                    var dv = UsersTable.AsDataView();
+                    dv.Sort = BuildSortExpression(sortExpression, SortDirection);
+                    UsersGridView.DataSource = dv;
+                }
+
                 UsersGridView.DataBind();
             }
             else
@@ -230,8 +256,19 @@ namespace FrontEndWebApp
 
         protected void PageSizeSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UsersGridView.PageSize = Int32.Parse(((DropDownList)sender).SelectedValue);
+            UsersGridView.PageSize = Int32.Parse((sender as DropDownList).SelectedValue);
             BindGrid();
+        }
+
+        protected string SortDirection
+        {
+            get { return (ViewState["SortDirection"] as string) ?? "ASC"; }
+            set { ViewState["SortDirection"] = value; }
+        }
+
+        protected void UsersGridView_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            BindGrid(e.SortExpression);
         }
     }
 }

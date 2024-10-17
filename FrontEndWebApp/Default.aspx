@@ -44,13 +44,15 @@
                         AutoGenerateColumns="False"
                         ShowFooter="true"
                         AllowPaging="true"
+                        AllowSorting="true"
                         CssClass="table"
                         OnRowEditing="UsersGridView_RowEditing"
                         OnRowUpdating="UsersGridView_RowUpdating"
                         OnRowCancelingEdit="UsersGridView_RowCancelingEdit"
                         OnRowDeleting="UsersGridView_RowDeleting"
                         OnRowCommand="UsersGridView_RowCommand"
-                        OnPageIndexChanging="UsersGridView_PageIndexChanging">
+                        OnPageIndexChanging="UsersGridView_PageIndexChanging"
+                        OnSorting="UsersGridView_Sorting">
 
                         <Columns>
 
@@ -61,7 +63,7 @@
                                         ID="InsertButton"
                                         CommandName="Insert"
                                         Text="Add"
-                                        CssClass="btn btn-primary" 
+                                        CssClass="btn btn-primary"
                                         ValidationGroup="Insert" />
                                 </FooterTemplate>
                                 <ItemTemplate>
@@ -95,7 +97,7 @@
                                 </EditItemTemplate>
                             </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Full Name" ItemStyle-CssClass="align-middle">
+                            <asp:TemplateField HeaderText="Full Name" ItemStyle-CssClass="align-middle" SortExpression="FirstName,LastName">
                                 <ItemTemplate>
                                     <asp:Label
                                         Text='<%# Eval("FirstName") %>'
@@ -157,8 +159,7 @@
                                                     ID="InsertFirstNameTextBox"
                                                     CssClass="form-control eng"
                                                     MaxLength="120"
-                                                    placeholder="First Name" 
-                                                    />
+                                                    placeholder="First Name" />
                                                 <div class="invalid-feedback">
                                                     <asp:CustomValidator
                                                         runat="server"
@@ -166,7 +167,7 @@
                                                         ControlToValidate="InsertFirstNameTextBox"
                                                         ValidateEmptyText="True"
                                                         Text="Please provide first name."
-                                                        OnServerValidate="CustomValidator_ServerValidate" 
+                                                        OnServerValidate="CustomValidator_ServerValidate"
                                                         ValidationGroup="Insert" />
                                                 </div>
                                             </div>
@@ -194,7 +195,7 @@
                                 </FooterTemplate>
                             </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Identity Card" ItemStyle-CssClass="align-middle">
+                            <asp:TemplateField HeaderText="Identity Card" ItemStyle-CssClass="align-middle" SortExpression="Identity">
                                 <ItemTemplate>
                                     <asp:Label
                                         Text='<%# Eval("Identity") %>'
@@ -239,7 +240,7 @@
                                 </FooterTemplate>
                             </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Gender" ItemStyle-CssClass="align-middle">
+                            <asp:TemplateField HeaderText="Gender" ItemStyle-CssClass="align-middle" SortExpression="Gender">
                                 <ItemTemplate>
                                     <asp:Label
                                         Text='<%# Eval("Gender") %>'
